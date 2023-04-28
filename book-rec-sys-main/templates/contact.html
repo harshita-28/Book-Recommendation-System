@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommender</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #6c63ff;
+            --color-success: #00bf8e;
+            --color-warning: #f7c94b;
+            --color-danger: #f75842;
+            --color-danger-variant: rgba(247, 88, 66, 0.4);
+            --color-white: #fff;
+            --color-light: rgba(255, 255, 255, 0.7);
+            --color-black: #000;
+            --color-bg:	#F4A460;
+            --color-bg1:  ;
+            --color-bg2: #CD853F;
+
+            --container-width-lg: 76%;
+            --container-width-md: 90%;
+            --container-width-sm: 94%;
+
+            --transition: all 400ms ease;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.7;
+            color: var(--color-white);
+            background-image: url('https://wallpaperaccess.com/full/124383.jpg');
+        }
+
+        .container {
+            width: var(--container-width-lg);
+            margin: 0 auto;
+        }
+
+        section {
+            padding: 6rem 0;
+            /* 1 rem = 16 pixels */
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 2rem;
+        }
+
+        h4 {
+            font-size: 1.3rem;
+        }
+
+        a {
+            color: var(--color-white);
+        }
+
+        img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--color-white);
+            color: var(--color-black);
+            padding: 1rem 2rem;
+            border: 1px solid transparent;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--color-white);
+            border-color: var(--color-white);
+        }
+
+        .btn-primary {
+            background: var(--color-danger);
+            color: var(--color-white);
+        }
+
+
+        /* ============= NAVBAR ============= */
+        .logo {
+            height: 4rem;
+
+        }
+
+        .nav__logo {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .navheadlogo {
+            margin-top: 0.5rem;
+        }
+
+        .nav_container h4 {
+            font-size: 1.2rem;
+        }
+
+        nav {
+            background: transparent;
+            width: 100vw;
+            height: 5rem;
+            position: fixed;
+            top: 0;
+            z-index: 11;
+        }
+
+        /* chnge navbar styles on scroll using javascript */
+
+        .window-scroll {
+            background: #580000;
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
+        }
+
+        .nav_container {
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav button {
+            display: none;
+        }
+
+        .nav_menu {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .nav_menu a {
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .nav_menu a:hover {
+            color: var(--color-bg2);
+        }
+
+        /*==================FOOTER===================*/
+
+        footer {
+            background: var(--color-bg1);
+            padding: 5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer__container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5rem;
+        }
+
+        .footer__container img {
+            margin-bottom: 1rem;
+        }
+
+        .footer__container>div h4 {
+            margin-bottom: 1.2rem;
+        }
+
+        .footer__1 img {
+            margin-top: -1rem;
+            margin-left: 2rem;
+            width: 100px;
+            margin-bottom: 2rem;
+        }
+
+        .footer__1 h4 {
+            text-align: center;
+            margin-top: -1.5rem;
+        }
+
+        .footer__1 p {
+            text-align: center;
+            margin-top: -0.5rem;
+        }
+
+        .footer__socials {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer__copyright {
+            text-align: center;
+            border-top: solid 1px var(--color-bg2);
+            margin-top: 2rem;
+        }
+
+        /*=================================== MEDIA QUERIES (TABLETS) =====================================*/
+
+        @media screen and (max-width: 1024px) {
+            .container {
+                width: var(--container-width-md);
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                ;
+            }
+
+            h2 {
+                font-size: 1.7rem;
+            }
+
+            h3 {
+                font-size: 1.4rem;
+            }
+
+            h4 {
+                font-size: 1.2rem;
+            }
+
+            /*===============NAVBAR==============*/
+
+            nav button {
+                display: inline-block;
+                background-color: transparent;
+                font-size: 1.8rem;
+                color: var(--color-white);
+                cursor: pointer;
+            }
+
+            nav button#close-menu-btn {
+                display: none;
+            }
+
+            .nav_menu {
+                position: fixed;
+                top: 5rem;
+                right: 5%;
+                height: fit-content;
+                width: 18rem;
+                flex-direction: column;
+                gap: 0;
+                display: none;
+            }
+
+            .nav_menu li {
+                width: 100%;
+                height: 5.8rem;
+                animation: animateNavItems 400ms linear forwards;
+                transform-origin: top right;
+                opacity: 0;
+            }
+
+            .nav_menu li:nth-child(2) {
+                animation-delay: 200ms;
+            }
+
+            .nav_menu li:nth-child(3) {
+                animation-delay: 400ms;
+            }
+
+            .nav_menu li:nth-child(4) {
+                animation-delay: 600ms;
+            }
+
+            @keyframes animateNavItems {
+                0% {
+                    transform: rotateZ(-90deg) rotateX(90deg) scale(0.1);
+                }
+
+                100% {
+                    transform: rotatez(0) rotate(0) scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .nav_menu li a {
+                background: var(--color-primary);
+                box-shadow: -4rem 6rem 10rem rgba(0, 0, 0, 0.6);
+                width: 100%;
+                height: 100%;
+                display: grid;
+                place-items: center;
+            }
+
+            .nav_menu li a:hover {
+                background-color: var(--color-bg2);
+                color: var(--color-white);
+            }
+
+
+
+            /*======================= FOOTER =======================*/
+            .footer__container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer__1 img {
+                height: 7rem;
+                width: 7rem;
+            }
+
+            .footer__1 h4 {
+                text-align: left;
+            }
+
+            .footer__1 p {
+                text-align: left;
+                width: 90%;
+            }
+        }
+
+        /*===================== MEDIA QUERIES (PHONES) ===================*/
+
+        @media screen and (max-width: 600px) {
+            .container {
+                width: var(--container-width-sm);
+                overflow: hidden;
+            }
+
+            /*====================== NAVBAR =======================*/
+            .nav_menu {
+                right: 3%;
+            }
+
+
+            /*=========================FOOTER====================*/
+            .footer__container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .footer__1 img {
+                margin: auto;
+            }
+
+            .footer__1 h4 {
+                margin-top: 1px;
+                text-align: center;
+            }
+
+            .footer__1 p {
+                text-align: center;
+            }
+
+            .footer__socials {
+                justify-content: center;
+            }
+        }
+
+        /*==============CONTACT==================*/
+
+
+        .contact__container {
+            background-color: var(--color-bg1);
+            padding: 4rem;
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 4rem;
+            height: 30rem;
+            margin: 7rem auto;
+            border-radius: 1rem;
+        }
+
+        /*===================ASIDE=======================*/
+        .contact__aside {
+            background: #CD853F;
+            padding: 3rem;
+            border-radius: 1rem;
+            position: relative;
+            bottom: 9rem;
+        }
+
+        .aside__image {
+            width: 20rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact__aside h2 {
+            text-align: left;
+            margin-bottom: 1rem;
+        }
+
+        .contact__aside p {
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact__details li {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+
+        }
+
+        .contact__socials {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .contact__socials a {
+            background: var(--color-bg2);
+            padding: 0.5rem;
+            border-radius: 50%;
+            font-size: 1.2rem;
+        }
+
+        .contact__socials a:hover {
+            background: transparent;
+        }
+
+        /*=========================== FORM =====================*/
+        .contact__form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-right: 4rem;
+        }
+
+        .form__name {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .form__name input[type="text"] {
+            width: 50%;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--color-bg);
+            color: var(--color-white);
+        }
+
+        .contact__form .btn {
+            width: max-content;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        /*======================MEDIA QUERY(TABLET)======================*/
+
+        @media screen and (max-width:1024px) {
+            .contact {
+                padding-bottom: 0;
+            }
+
+            .contact__container {
+                gap: 1.5rem;
+                margin-top: 3rem;
+                height: auto;
+                padding: 1.5rem;
+            }
+
+            .contact__aside {
+                width: auto;
+                padding: 1.5rem;
+                bottom: 0;
+            }
+
+            .contact__form {
+                align-self: center;
+            }
+        }
+
+        /*==========================MEDIA QUERY(PHONE) ===================*/
+
+        @media screen and (max-width: 600px) {
+
+            .contact__container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                padding: 0;
+            }
+
+            .contact__form {
+                padding-left: 1rem;
+                margin-right: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .form__name {
+                flex-direction: column;
+            }
+
+            .form__name input[type="text"] {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <link rel="icon" href="https://img.icons8.com/bubbles/512/books.png">
+
+    <!-- ICONSCOUT ICONS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+
+    <!-- GOOGLE FONT (MONTSERRAT) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+    <nav>
+        <div class="container nav_container">
+            <div class="nav__logo">
+                <div><a href="/"><img class="logo"
+                            src="https://img.icons8.com/bubbles/512/books.png"
+                            alt=""></a></div>
+                <div class="navheadlogo"><a href="/">
+                        <h4>Book</h4>
+                        <h4>Recommender</h4>
+                    </a></div>
+            </div>
+            <ul class="nav_menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/recommend">Recommendation</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+
+            <button id="open-menu-btn"><i class="uil uil-bars"></i></button>
+            <button id="close-menu-btn"><i class="uil uil-multiply"></i></button>
+        </div>
+    </nav>
+
+
+    <!-- -------------------- END OF NAVBAR ------------------------- -->
+
+    <section class="contact">
+        <div class="container contact__container">
+            <aside class="contact__aside">
+                <div class="aside__image">
+                    <img src="https://lystloc-landing-page.s3.ap-south-1.amazonaws.com/images/others/contact-us.svg"
+                          alt="">
+                </div>
+                <h2>Contact Us</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, rerum?</p>
+                <ul class="contact__details">
+                    <li><i class="uil uil-incoming-call"></i>
+                        <h5>+91 123 456 7890</h5>
+                    </li>
+                    <li><i class="uil uil-envelope"></i>
+                        <h5>bookrecommender@gmail.com</h5>
+                    </li>
+                    <li><i class="uil uil-location-point"></i>
+                        <h5>Chennai</h5>
+                    </li>
+                </ul>
+
+                <ul class="contact__socials">
+                    <li class="sign1"><a href="https://facebook.com"><i class="uil uil-facebook"></i></a></li>
+                    <li class="sign2"><a href="https://instagram.com"><i class="uil uil-instagram"></i></a></li>
+                    <li class="sign3"><a href="https://twitter.com"><i class="uil uil-twitter"></i></a></li>
+                    <li class="sign4"><a href="https://linkedin.com"><i class="uil uil-linkedin"></i></a></li>
+                </ul>
+            </aside>
+
+            <form action="https://formspree.io/f/xqkoepwy" method="post" class="contact__form">
+                <div class="form__name">
+                    <input type="text" name="First Name" placeholder="First Name" required>
+                    <input type="text" name="Last Name" placeholder="Last Name" required>
+                </div>
+
+                <input type="email" name="Email Address" placeholder="Your Email Address" required>
+                <textarea name="Message" rows="7" placeholder="Message"></textarea>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!------------------END OF CONTACT SECTION------------------->
+
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__1">
+                <a href="/"><img src="https://img.icons8.com/bubbles/512/books.png"
+                        alt=""></a>
+                <h4>Book Recommender</h4>
+            </div>
+
+            <div class="footer__2">
+                <h4>links</h4>
+                <h4 class="permalinks"></h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/recommend">Recommendation</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer__3">
+                <h4>Primacy</h4>
+                <ul class="privacy">
+                    <li><a href="#">Pivacy Policy</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer__4">
+                <h4>Contact Us</h4>
+                <div>
+                    <p>+91 123 456 7890</p>
+                    <p>bookrecommender@gmail.com</p>
+                </div>
+
+                <ul class="footer__socials">
+                    <li><a href="#"><i class="uil uil-facebook"></i></a></li>
+                    <li><a href="#"><i class="uil uil-instagram"></i></a></li>
+                    <li><a href="#"><i class="uil uil-twitter"></i></a></li>
+                    <li><a href="#"><i class="uil uil-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer__copyright">
+            <small>Copyright &copy; Harshita</small>
+        </div>
+    </footer>
+
+
+    <!------------------------END OF FOOTER--------------------------->
+
+
+    <script>
+
+        //Change navbar style on scroll
+
+        window.addEventListener('scroll', () => {
+            document.querySelector('nav').classList.toggle('window-scroll', window.scrollY > 50)
+        })
+
+        // show/hide faq answer
+
+        
+        // show/ hide nav menu
+
+        const menu = document.querySelector(".nav_menu");
+        const menuBtn = document.querySelector("#open-menu-btn");
+        const closeBtn = document.querySelector("#close-menu-btn");
+
+        menuBtn.addEventListener('click', () => {
+            menu.style.display = "flex";
+            closeBtn.style.display = "inline-block";
+            menuBtn.style.display = "none";
+        })
+
+        //close nav menu
+
+        const closeNav = () => {
+            menu.style.display = "none";
+            closeBtn.style.display = "none";
+            menuBtn.style.display = "inline-block";
+        }
+
+        closeBtn.addEventListener('click', closeNav)
+
+    </script>
+</body>
+
+</html>
